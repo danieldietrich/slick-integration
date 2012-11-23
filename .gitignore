@@ -1,3 +1,4 @@
+.cache
 *.class
 *.log
 
@@ -10,4 +11,10 @@ project/boot/
 project/plugins/project/
 
 # Scala-IDE specific
+.classpath
+.project
 .scala_dependencies
+.settings
+
+# Mac
+.DS_Store
