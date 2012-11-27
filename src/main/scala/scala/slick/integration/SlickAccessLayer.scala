@@ -60,7 +60,7 @@ trait _DAL { self: Profile =>
  * type parameters, so the type is declared here as constant.
  */
 private[integration] object PK {
-  type Type = Int
+  type Type = Long
 }
 
 /**
@@ -90,7 +90,7 @@ trait _Component[T <: Entity[T]] { self: Profile =>
 
     // helpers
     protected def autoInc = * returning id
-    protected def finderById = this.createFinderBy(_.id)
+    protected def finderById = createFinderBy(_.id)
 
     // operations on rows
     def delete(id: PK.Type): Int = db.withSession { implicit s: Session =>
