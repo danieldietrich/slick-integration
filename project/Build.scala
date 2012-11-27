@@ -5,7 +5,7 @@ object ScalaBuild extends Build {
 
   val buildOrganization = "net.danieldietrich"
   val buildName = "slick-integration"
-  val buildVersion = "1.1-SNAPSHOT"
+  val buildVersion = "1.0-SNAPSHOT"
 
   val buildScalaVersion = "2.10.0-RC2"
   val buildScalacOptions = Seq("-encoding", "UTF-8", "-target:jvm-1.6", "-deprecation", "-feature", "-unchecked", "-Ywarn-adapted-args")
@@ -30,7 +30,7 @@ object ScalaBuild extends Build {
     scalacOptions := buildScalacOptions,
     libraryDependencies := buildDependencies,
     resolvers := buildResolvers,
-    
+    // 'sbt publish' to local maven repository
     publishMavenStyle := true,
     publishTo := Some(Resolver.file("file", new File(Path.userHome.absolutePath + "/.m2/repository"))))
 

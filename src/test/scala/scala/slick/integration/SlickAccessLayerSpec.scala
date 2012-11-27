@@ -28,11 +28,11 @@ trait ProductComponent extends _Component[Product] { self: Profile =>
 object DAL extends _DAL with ProductComponent with Profile {
 
   // trait Profile implementation
-  override val profile = H2Driver // PlayProfile.loadProfile("default") 
-  override def db = Database.forURL("jdbc:h2:mem:test1", driver = "org.h2.Driver") // PlayProfile.dbProvider("default")
+  val profile = H2Driver 
+  def db = Database.forURL("jdbc:h2:mem:test1", driver = "org.h2.Driver")
 
   // _DAL.ddl implementation
-  override lazy val ddl: DDL = Products.ddl // ++ Others.ddl
+  lazy val ddl: DDL = Products.ddl
 
 }
 
