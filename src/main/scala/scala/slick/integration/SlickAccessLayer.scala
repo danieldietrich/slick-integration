@@ -94,15 +94,16 @@ trait _Component[T <: Entity[T]] { self: Profile =>
 
     // operations on rows
     def delete(id: PK.Type): Int = db.withSession { implicit s: Session =>
-      this.where(_.id === id).delete
+      this.filter(_.id === id.bind).delete
     }
 
+    lazy val findAllQuery = for (entity <- this) yield entity
     def findAll(): List[T] = db.withSession { implicit s: Session =>
-      (for (entity <- this) yield entity).list
+      findAllQuery.list
     }
 
     def findById(id: PK.Type): Option[T] = db.withSession { implicit s: Session =>
-      finderById(id).firstOption
+      (for { e <- this if e.id === id.bind} yield e).firstOption
     }
 
     def insert(entity: T): T = db.withSession { implicit s: Session =>
@@ -112,7 +113,7 @@ trait _Component[T <: Entity[T]] { self: Profile =>
 
     def update(entity: T): Int = db.withSession { implicit s: Session =>
       entity.id.map { id =>
-        this.where(_.id === id).update(entity)
+        this.filter(_.id === id.bind).update(entity)
       }.getOrElse(0)
     }
   }
