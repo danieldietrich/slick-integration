@@ -90,8 +90,7 @@ trait _Component[T <: Entity[T]] { self: Profile =>
 
     // helpers
     protected def autoInc = * returning id
-    protected def finderById = createFinderBy(_.id)
-
+    
     // operations on rows
     def delete(id: PK.Type): Int = db.withSession { implicit s: Session =>
       this.filter(_.id === id.bind).delete
