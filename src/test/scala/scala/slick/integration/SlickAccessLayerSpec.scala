@@ -82,6 +82,9 @@ class DataAccessLayerSpec extends Specification {
     
     "crud" in {
       db.withSession { implicit s: Session =>
+        
+        create
+        
         val product = Products.insert(Product("name", "description"))
         product.id must not equalTo (None) // AutoInc id correct
         product.id.map { id =>
@@ -99,23 +102,31 @@ class DataAccessLayerSpec extends Specification {
           Products.existsName("new") must equalTo(false)
           
         }
+        
+        drop
+        
         success
       }
     }
     
-    "query template with two parameters" in {
-      db.withSession { implicit s: Session =>
-        val product = Products.insert(Product("name", "description"))
-        
-        Products.findByNameAndDescription1("name", "description") should equalTo(Some(product))
-        Products.findByNameAndDescription1("xxx", "description") should equalTo(None)
-        
-        Products.findByNameAndDescription2("name", "description") should equalTo(Some(product))
-        Products.findByNameAndDescription2("xxx", "description") should equalTo(None)
-        
-        success
-      }
-    }
+//    "query template with two parameters" in {
+//      db.withSession { implicit s: Session =>
+//        
+//        create
+//        
+//        val product = Products.insert(Product("name", "description"))
+//        
+//        Products.findByNameAndDescription1("name", "description") should equalTo(Some(product))
+//        Products.findByNameAndDescription1("xxx", "description") should equalTo(None)
+//        
+//        Products.findByNameAndDescription2("name", "description") should equalTo(Some(product))
+//        Products.findByNameAndDescription2("xxx", "description") should equalTo(None)
+//        
+//        drop
+//        
+//        success
+//      }
+//    }
     
   }
   
