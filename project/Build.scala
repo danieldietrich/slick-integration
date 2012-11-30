@@ -35,7 +35,7 @@ object ScalaBuild extends Build {
     publishTo := Some(Resolver.file("file", new File(Path.userHome.absolutePath + "/.m2/repository"))))
 
   val main = Project(
-    "slick-integration",
+    buildName,
     file("."),
     settings = projectSettings)
 
