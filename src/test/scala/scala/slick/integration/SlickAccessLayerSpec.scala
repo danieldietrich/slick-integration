@@ -12,11 +12,11 @@ case class Product(name: String, description: String, id: Option[Long] = None) e
   def withId(id: Long): Product = copy(id = Some(id))
 }
 
-trait ProductComponent extends _Component[Product] { self: Profile =>
+trait ProductComponent extends _Component { self: Profile =>
 
   import profile.simple._
   
-  object Products extends Mapper("product") {
+  object Products extends Mapper[Product]("product") {
 
     def name = column[String]("name")
     def description = column[String]("description")
@@ -93,12 +93,12 @@ class DataAccessLayerSpec extends Specification {
           Products.existsName("name") must equalTo(true)
           Products.existsName("new") must equalTo(false)
           
-          Products.update(product.copy(name = "new")) must equalTo(1)
+          Products.update(product.copy(name = "new")) must equalTo(Product("new", "description", Some(id)))
           Products.existsName("new") must equalTo(true)
           Products.existsName("name") must equalTo(false)
           
-          Products.delete(id) must equalTo(1) // one row deleted 
-          Products.findById(id) must equalTo(None) // product not found
+          Products.delete(id) must equalTo(true) 
+          Products.findById(id) must equalTo(None)
           Products.existsName("new") must equalTo(false)
           
         }

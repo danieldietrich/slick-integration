@@ -56,51 +56,43 @@ trait _DAL { self: Profile =>
 }
 
 /**
- * Workaround: Currently Slick Table.column cannot evaluate class
- * type parameters, so the type is declared here as constant.
- */
-private[integration] object PK {
-  type Type = Long
-}
-
-/**
  * Here, a Database entity has an auto generated
  * id and is be copied by withId on insertion.
  */
 trait Entity[T <: Entity[T]] {
-  val id: Option[PK.Type]
-  def withId(id: PK.Type): T
+  val id: Option[Long]
+  def withId(id: Long): T
 }
 
 /**
  * Because a Slick Table depends on scala.slick.session.Driver,
  * the _Components have to be mixed in a DAL with the Cake pattern.
  */
-trait _Component[T <: Entity[T]] { self: Profile =>
+trait _Component { self: Profile =>
 
   import profile.simple._
 
   /**
    * Default table columns and operations.
    */
-  abstract class Mapper(table: String) extends Table[T](None, table) {
+  abstract class Mapper[T <: Entity[T]](table: String) extends Table[T](None, table) {
 
     // table columns
-    def id = column[PK.Type]("id", O.PrimaryKey, O.AutoInc)
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
     // helpers
     protected def autoInc = * returning id
     
     // operations on rows
-    def delete(id: PK.Type): Int = db.withSession { implicit s: Session =>
-      this.filter(_.id === id.bind).delete
+    def delete(id: Long): Boolean = db.withSession { implicit s: Session =>
+      this.filter(_.id === id.bind).delete > 0
     }
     
     def findAll(): List[T] = db.withSession { implicit s: Session =>
       (for (entity <- this) yield entity).list
     }
 
-    def findById(id: PK.Type): Option[T] = db.withSession { implicit s: Session =>
+    def findById(id: Long): Option[T] = db.withSession { implicit s: Session =>
       (for { e <- this if e.id === id.bind} yield e).firstOption
     }
 
@@ -109,11 +101,11 @@ trait _Component[T <: Entity[T]] { self: Profile =>
       entity.withId(id)
     }
 
-    def update(entity: T): Int = db.withSession { implicit s: Session =>
+    def update(entity: T): T = db.withSession { implicit s: Session =>
       entity.id.map { id =>
         this.filter(_.id === id.bind).update(entity)
-      }.getOrElse(0)
+      }
+      entity
     }
   }
-
 }

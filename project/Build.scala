@@ -7,12 +7,12 @@ object ScalaBuild extends Build {
   val buildName = "slick-integration"
   val buildVersion = "1.0-SNAPSHOT"
 
-  val buildScalaVersion = "2.10.0-RC2"
+  val buildScalaVersion = "2.10.0-RC3"
   val buildScalacOptions = Seq("-encoding", "UTF-8", "-target:jvm-1.6", "-deprecation", "-feature", "-unchecked", "-Ywarn-adapted-args")
 
   val buildDependencies = Seq(
 
-    "com.typesafe" % "slick_2.10.0-RC2" % "0.11.2",
+    "com.typesafe" % "slick_2.10.0-RC3" % "0.11.2",
     "play" % "play_2.10" % "2.1-RC1",
     "play" % "play-jdbc_2.10" % "2.1-RC1",
 
