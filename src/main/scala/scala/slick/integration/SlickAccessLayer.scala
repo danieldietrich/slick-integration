@@ -77,23 +77,30 @@ trait _Component { self: Profile =>
    */
   abstract class Mapper[T <: Entity[T]](table: String) extends Table[T](None, table) {
 
-    // table columns
+    // -- table columns
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
-    // helpers
+    // -- helpers
     protected def autoInc = * returning id
     
-    // operations on rows
+    // -- operations on rows
     def delete(id: Long): Boolean = db.withSession { implicit s: Session =>
-      this.filter(_.id === id.bind).delete > 0
+      this.filter(_.id === id).delete > 0
     }
     
+    lazy val findAllQuery = for (entity <- this) yield entity
+    
     def findAll(): List[T] = db.withSession { implicit s: Session =>
-      (for (entity <- this) yield entity).list
+      findAllQuery.list
     }
 
+    lazy val findByIdQuery = for {
+      id <- Parameters[Long]
+      e <- this if e.id === id
+    } yield e
+    
     def findById(id: Long): Option[T] = db.withSession { implicit s: Session =>
-      (for { e <- this if e.id === id.bind} yield e).firstOption
+      findByIdQuery(id).firstOption
     }
 
     def insert(entity: T): T = db.withSession { implicit s: Session =>
@@ -103,7 +110,7 @@ trait _Component { self: Profile =>
 
     def update(entity: T): T = db.withSession { implicit s: Session =>
       entity.id.map { id =>
-        this.filter(_.id === id.bind).update(entity)
+        this.filter(_.id === id).update(entity)
       }
       entity
     }
