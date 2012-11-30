@@ -2,7 +2,7 @@
 
 helps you to implement a data access layer in your application using [Slick](http://slick.typesafe.com).
 
-** Key Features **
+**Key Features**
 
 * Designed to be the foundation of [non-anemic](http://martinfowler.com/bliki/AnemicDomainModel.html) domain models
 * Providing a thin abstraction layer to reduce boilerplate
