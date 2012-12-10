@@ -11,11 +11,7 @@ object ScalaBuild extends Build {
   val buildScalacOptions = Seq("-encoding", "UTF-8", "-target:jvm-1.6", "-deprecation", "-feature", "-unchecked", "-Ywarn-adapted-args")
 
   val buildDependencies = Seq(
-
     "com.typesafe" % "slick_2.10.0-RC5" % "0.11.2",
-    "play" % "play_2.10" % "2.1-RC1",
-    "play" % "play-jdbc_2.10" % "2.1-RC1",
-
     "com.h2database" % "h2" % "1.3.166" % "test",
     "org.slf4j" % "slf4j-nop" % "1.6.4" % "test", // <- disables logging
     "org.specs2" %% "specs2" % "1.12.3" % "test")

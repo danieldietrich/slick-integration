@@ -1,12 +1,9 @@
 package scala.slick.integration
 
 import org.specs2.mutable._
-import play.api.db.DB
 import scala.slick.driver.H2Driver
 import scala.slick.lifted.DDL
 import scala.slick.session._
-import org.specs2.execute.Result
-import org.specs2.specification.AroundOutside
 
 case class Product(name: String, description: String, id: Option[Long] = None) extends Entity[Product] {
   def withId(id: Long): Product = copy(id = Some(id))
