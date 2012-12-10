@@ -36,7 +36,7 @@ import scala.slick.session.Database
  * }}}
  *
  */
-trait PlayProfile extends Profile {
+trait SimpleProfile extends Profile {
 
   protected def load(driver: String) = {
     
