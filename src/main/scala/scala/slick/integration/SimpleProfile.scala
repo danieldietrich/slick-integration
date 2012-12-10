@@ -20,7 +20,7 @@ import scala.slick.session.Database
  *
  *   override val profile = {
  *     val conf = app.configuration
- *     val name = "db" + dbName + ".slick.driver"
+ *     val name = "db." + dbName + ".slick.driver"
  *     val driver = conf.getConfig(name).getOrElse(throw conf.reportError(name, "Missing configuration [" + name + "]"))
  *     load(driver)
  *   }
