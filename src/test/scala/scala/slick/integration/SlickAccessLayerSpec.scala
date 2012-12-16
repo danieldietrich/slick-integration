@@ -4,6 +4,7 @@ import org.specs2.mutable._
 import scala.slick.driver.H2Driver
 import scala.slick.lifted.DDL
 import scala.slick.session._
+import test.TestHelper
 
 case class Product(name: String, description: String, id: Option[Long] = None) extends Entity[Product] {
   def withId(id: Long): Product = copy(id = Some(id))
@@ -61,21 +62,6 @@ object DAL extends _DAL with ProductComponent with Profile {
     ddl.create
   }
 
-}
-
-object TestHelper {
-  def running[T](block: => T): T = {
-    synchronized {
-      DAL.db.withSession { implicit session: Session =>
-        try {
-          DAL.create
-          block
-        } finally {
-          DAL.drop
-        }
-      }
-    }
-  }
 }
 
 class DataAccessLayerSpec extends Specification {
