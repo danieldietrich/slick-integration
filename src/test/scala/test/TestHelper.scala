@@ -1,7 +1,7 @@
 package test
 
 import scala.slick.session.Session
-import bestpractice.DAL
+import scala.slick.integration.DAL
 
 object TestHelper {
   def running[T](block: => T): T = {
