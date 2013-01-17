@@ -1,6 +1,6 @@
 # Slick Integration #
 
-[![Build Status](https://api.travis-ci.org/danieldietrich/slick-integration.png)](https://travis-ci.org/danieldietrich/slick-integration)
+[![Build Status](https://travis-ci.org/danieldietrich/slick-integration.png)](https://travis-ci.org/danieldietrich/slick-integration)
 
 helps you to implement a data access layer in your application using [Slick](http://slick.typesafe.com).
 
