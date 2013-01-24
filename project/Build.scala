@@ -12,9 +12,9 @@ object ScalaBuild extends Build {
 
   val buildDependencies = Seq(
     "com.typesafe" %% "slick" % "1.0.0-RC1",
-    "com.h2database" % "h2" % "1.3.166" % "test",
-    "org.slf4j" % "slf4j-nop" % "1.6.4" % "test", // <- disables logging
-    "org.specs2" %% "specs2" % "1.12.3" % "test")
+    "com.h2database" % "h2" % "1.3.170" % "test",
+    "org.slf4j" % "slf4j-nop" % "1.7.2" % "test", // <- disables logging
+    "org.specs2" %% "specs2" % "1.13" % "test")
 
   val buildResolvers = Seq(
     "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/")
